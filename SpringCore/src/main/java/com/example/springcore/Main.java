@@ -4,6 +4,7 @@ import com.example.springcore.config.MyAppConfig;
 import com.example.springcore.controller.BeanConfigDemo;
 import com.example.springcore.controller.HelloController;
 import com.example.springcore.controller.ScopeAndLifecycleDemo;
+import com.example.springcore.controller.AopDemo;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +24,9 @@ public class Main {
 
         System.out.println(">> @Bean Config Demo:");
         context.getBean(BeanConfigDemo.class).run();
+
+        System.out.println(">> AOP Demo:");
+        context.getBean(AopDemo.class).run();
 
         context.close();
     }
