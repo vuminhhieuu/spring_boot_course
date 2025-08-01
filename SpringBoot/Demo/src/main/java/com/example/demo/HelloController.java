@@ -1,18 +1,35 @@
 package com.example.demo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class HelloController {
+
+    @Autowired // Spring sẽ tự động inject một instance của UserRepository vào đây
+    private UserRepository userRepository;
 
     @GetMapping("/")
     public String sayHello() {
         return "Hello, World!";
     }
 
-    @GetMapping("users/{id}")
-    public String getUserById(@PathVariable long id) {
-        return "Lay thon tin cho user co ID: " + id;
+    @GetMapping("/users")
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @GetMapping("/users/{id}")
+    public Optional<User> getUserById(@PathVariable Long id) {
+        return userRepository.findById(id);
+    }
+
+    @PostMapping("/users")
+    public User createUser(@RequestBody User user) {
+        return userRepository.save(user);
     }
 
     @GetMapping("/products")
@@ -22,10 +39,5 @@ public class HelloController {
         } else {
             return "Lay danh sach tat ca san pham";
         }
-    }
-
-    @PostMapping("/users")
-    public String createUser(@RequestBody User user) {
-        return "Da tao user voi ten dang nhap: " + user.getUsername() + " va mat khau: " + user.getPassword();
     }
 }
